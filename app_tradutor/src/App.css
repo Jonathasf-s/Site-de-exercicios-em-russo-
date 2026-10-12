@@ -43,3 +43,22 @@ button:hover { background: #1d4ed8; }
 .correta { font-size: 1.4rem; font-weight: 600; margin: 4px 0 12px; }
 .ok button, .erro button { margin-top: 8px; }
 .carregando { text-align: center; margin-top: 80px; }
+
+
+/* Teclado virtual */
+.teclado { margin-top: 20px; display: flex; flex-direction: column; gap: 6px; }
+.teclado-linha { display: flex; justify-content: center; gap: 6px; }
+.tecla {
+  min-width: 34px;
+  padding: 10px 0;
+  flex: 1;
+  max-width: 44px;
+  font-size: 1.1rem;
+  background: #e5e7eb;
+  color: #1f2937;
+}
+.tecla:hover:not(:disabled) { background: #d1d5db; }
+.tecla:disabled { opacity: 0.5; cursor: not-allowed; }
+.tecla-larga { max-width: none; flex: 0 0 auto; padding: 10px 14px; font-size: 0.9rem; }
+.tecla-espaco { max-width: none; flex: 1; font-size: 0.9rem; }
+.tecla.ativa { background: #2563eb; color: white; }

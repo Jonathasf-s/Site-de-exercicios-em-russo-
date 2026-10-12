@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./App.css";
+import Teclado from "./Teclado.jsx";
 
 export default function App() {
   // "Estado": valores que, quando mudam, atualizam a tela automaticamente
@@ -51,6 +52,11 @@ export default function App() {
         />
         {resultado === null && <button type="submit">Verificar</button>}
       </form>
+            <Teclado
+        desativado={resultado !== null}
+        onTecla={(t) => setResposta((r) => r + t)}
+        onApagar={() => setResposta((r) => r.slice(0, -1))}
+      />
 
       {resultado && (
         <div className={resultado.correto ? "ok" : "erro"}>
