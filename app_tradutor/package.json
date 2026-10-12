@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "concurrently \"npm:servidor\" \"npm:site\"",
     "servidor": "node server/index.js",
-    "site": "vite"
+    "site": "vite",
+    "importar": "node server/importar.js"
   },
   "dependencies": {
     "express": "^4.21.0",
