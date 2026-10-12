@@ -1,7 +1,7 @@
-import Database from "better-sqlite3";
+import { DatabaseSync } from "node:sqlite";
 
 // Se você já tem seu .db, copie para a pasta app_tradutor e troque o nome aqui
-const db = new Database("frases.db");
+const db = new DatabaseSync ("frases.db");
 
 db.exec(`
   CREATE TABLE IF NOT EXISTS frases (
