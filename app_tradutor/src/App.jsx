@@ -1,76 +1,42 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./App.css";
-import Teclado from "./Teclado.jsx";
+import dados from "./frases.json";
+import Quiz from "./Quiz.jsx";
 
 export default function App() {
-  // "Estado": valores que, quando mudam, atualizam a tela automaticamente
-  const [frase, setFrase] = useState(null);         // frase atual {id, portugues}
-  const [resposta, setResposta] = useState("");     // o que o usuário digitou
-  const [resultado, setResultado] = useState(null); // {correto, respostaCerta}
+  // Qual caso foi escolhido? null = ainda nenhum (mostra os botões)
+  const [caso, setCaso] = useState(null);
 
-  // Busca uma frase nova no servidor
-  async function carregarFrase() {
-    const r = await fetch("/api/frase");
-    const dados = await r.json();
-    setFrase(dados);
-    setResposta("");
-    setResultado(null);
-  }
+  // Tela 1: os botões dos casos
+  if (caso === null) {
+    return (
+      <main className="cartao">
+        <h1>Traduza para o russo</h1>
+        <p className="frase">Escolha um caso para praticar</p>
 
-  // Roda uma vez quando a página abre
-  useEffect(() => {
-    carregarFrase();
-  }, []);
-
-  // Envia a resposta para conferir
-  async function verificar(e) {
-    e.preventDefault(); // não recarregar a página
-    const r = await fetch("/api/verificar", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id: frase.id, resposta }),
-    });
-    setResultado(await r.json());
-  }
-
-  if (!frase) return <p className="carregando">Carregando...</p>;
-
-  return (
-    <main className="cartao">
-      <h1>Traduza para o russo</h1>
-      <p className="frase">{frase.portugues}</p>
-
-      <form onSubmit={verificar}>
-        <input
-          type="text"
-          lang="ru"
-          value={resposta}
-          onChange={(e) => setResposta(e.target.value)}
-          placeholder="Напишите перевод..."
-          disabled={resultado !== null}
-          autoFocus
-        />
-        {resultado === null && <button type="submit">Verificar</button>}
-      </form>
-            <Teclado
-        desativado={resultado !== null}
-        onTecla={(t) => setResposta((r) => r + t)}
-        onApagar={() => setResposta((r) => r.slice(0, -1))}
-      />
-
-      {resultado && (
-        <div className={resultado.correto ? "ok" : "erro"}>
-          {resultado.correto ? (
-            <p>✅ Resposta certa!</p>
-          ) : (
-            <>
-              <p>❌ Quase! A resposta correta é:</p>
-              <p className="correta">{resultado.respostaCerta}</p>
-            </>
-          )}
-          <button onClick={carregarFrase}>Próxima frase</button>
+        <div className="casos">
+          {/* Object.entries transforma o JSON em uma lista [chave, dados] */}
+          {Object.entries(dados).map(([chave, info]) => (
+            <button
+              key={chave}
+              className="botao-caso"
+              onClick={() => setCaso(chave)}
+            >
+              <strong>{info.titulo}</strong>
+              <span>{info.descricao}</span>
+            </button>
+          ))}
         </div>
-      )}
-    </main>
+      </main>
+    );
+  }
+
+  // Tela 2: o exercício do caso escolhido
+  return (
+    <Quiz
+      key={caso}
+      info={dados[caso]}
+      onVoltar={() => setCaso(null)}
+    />
   );
 }

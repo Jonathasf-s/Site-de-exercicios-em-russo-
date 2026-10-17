@@ -1,4 +1,4 @@
-  body {
+ body {
   margin: 0;
   font-family: system-ui, sans-serif;
   background: #f3f4f6;
@@ -42,8 +42,31 @@ button:hover { background: #1d4ed8; }
 .erro { background: #fee2e2; }
 .correta { font-size: 1.4rem; font-weight: 600; margin: 4px 0 12px; }
 .ok button, .erro button { margin-top: 8px; }
-.carregando { text-align: center; margin-top: 80px; }
 
+/* Tela de escolha dos casos */
+.casos { display: grid; gap: 10px; }
+.botao-caso {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: left;
+  padding: 14px 16px;
+  background: #eef2ff;
+  color: #1f2937;
+  border: 1px solid #c7d2fe;
+}
+.botao-caso:hover { background: #e0e7ff; }
+.botao-caso span { font-size: 0.85rem; color: #4b5563; }
+
+/* Topo do exercício e tela final */
+.topo { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.progresso { color: #6b7280; font-size: 0.9rem; }
+.voltar { background: transparent; color: #2563eb; padding: 4px 0; }
+.voltar:hover { background: transparent; text-decoration: underline; }
+.secundario { background: #e5e7eb; color: #1f2937; }
+.secundario:hover { background: #d1d5db; }
+.fim { text-align: center; }
+.acoes { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
 
 /* Teclado virtual */
 .teclado { margin-top: 20px; display: flex; flex-direction: column; gap: 6px; }
@@ -62,3 +85,10 @@ button:hover { background: #1d4ed8; }
 .tecla-larga { max-width: none; flex: 0 0 auto; padding: 10px 14px; font-size: 0.9rem; }
 .tecla-espaco { max-width: none; flex: 1; font-size: 0.9rem; }
 .tecla.ativa { background: #2563eb; color: white; }
+
+/* Telas pequenas (celular) */
+@media (max-width: 520px) {
+  .cartao { margin: 0; border-radius: 0; padding: 20px 16px; min-height: 100vh; box-sizing: border-box; }
+  .teclado-linha { gap: 4px; }
+  .tecla { min-width: 0; padding: 12px 0; }
+}
